@@ -146,22 +146,22 @@ class App extends React.Component {
 
   render() {
     return (
-      <body className="container-fluid">
-        <div id="drum-machine" className="container text-center">
-          <div className="row">
-            <div className="col-sm-6">
-              <p id="display">
-                {this.state.display}
-              </p>
-              <PadBank
-                power={this.state.power}
-                updateDisplay={this.displayClipName}
-                currentPadBank={this.state.currentPadBank} />
-            </div>
-            <div className="col-sm-6">
-              <ControlsPanel />
-            </div>
+      <body>
+        <div id="drum-machine" className="text-center">
+
+          <div id="DivDisplayPadBank">
+            <p id="display">
+              {this.state.display}
+            </p>
+            <PadBank
+              power={this.state.power}
+              updateDisplay={this.displayClipName}
+              currentPadBank={this.state.currentPadBank} />
           </div>
+          <div id="DivControlPanel">
+            <ControlsPanel />
+          </div>
+
         </div>
       </body>
     )
@@ -300,8 +300,11 @@ class ControlsPanel extends React.Component {
             <span class="onoffswitch-switch2"></span>
           </label>
         </div>
+        <div id="volumen">
           <label id="volumenLabel" for="volumen-range">Volumen</label>
-          <input type="range" class="range vertical-heighest-first round" id="volumen-range"></input>
+          <br />
+          <input type="range" id="volumen-range"></input>
+        </div>
       </div>
     )
   }
