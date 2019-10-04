@@ -7,7 +7,7 @@ body {
   font-family: 'Bangers', cursive;
 }
 #drum-machine {
-  width: 60%;
+  width: 80%;
   height: auto;
   min-height: 350px;
   margin-top: 10%;
@@ -19,10 +19,10 @@ body {
   padding: 1%;
   background: hsl(28,80%,70%);
   display: grid;
-  grid-template-columns: 48% 48%;
-  column-gap: 4%;
+  grid-template-columns: 100%;
   grid-template-areas: 
-  "Play Controls";
+  "Play"
+  "Controls";
 }
 #DivDisplayPadBank
 {
@@ -30,7 +30,7 @@ body {
 }
 #DivControlPanel
 {
-
+  margin-top: 5%;
 }
 #display{
   background-color: #AED6F1;
@@ -53,7 +53,7 @@ body {
   background: rgb(230, 116, 17);
   border-radius: 5px;
   display: grid;
-  grid-template-columns: 80px;
+  grid-template-columns: 100%;
   grid-template-rows: 40px 40px 40px;
   row-gap: 20px; 
   column-gap: 20px;
@@ -69,25 +69,50 @@ body {
 {
    padding-top: 3px;
    padding-bottom: 3px;
-   margin-left: 40%;
+   justify-self:center;
 }
 #bankSelector
 {
    padding-top: 3px;
    padding-bottom: 3px;
-   margin-left: 40%;
+   justify-self:center;
 }
 #volumen
 {
   grid-column: 1 / 2;
-  margin-left: 20%;
+  justify-self:center;
 }
 #volumen-range
 {
   color: #34A7C1;
 }
 /* ********************************************************* @medias    */
-@media (min-width: 860px)
+@media (min-width:620px)
+{
+  #drum-machine
+  {
+    width: 60%;
+    grid-template-columns: 48% 48%;
+    column-gap: 4%;
+    grid-template-areas: 
+    "Play Controls";
+  }
+  #DivControlPanel
+  {
+    margin-top: 0%;
+  }
+  #onOffSelector
+  {
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+#bankSelector
+{
+   padding-top: 3px;
+   padding-bottom: 3px;
+}
+}
+@media (min-width: 880px)
 {
   #controls
   {

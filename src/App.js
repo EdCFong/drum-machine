@@ -159,7 +159,8 @@ class App extends React.Component {
               currentPadBank={this.state.currentPadBank} />
           </div>
           <div id="DivControlPanel">
-            <ControlsPanel />
+            <ControlsPanel
+            power={this.state.power} />
           </div>
 
         </div>
