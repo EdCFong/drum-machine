@@ -135,16 +135,69 @@ class App extends React.Component {
       sliderVal: 0.5
     }
     this.displayClipName = this.displayClipName.bind(this);
+    this.TurnOn = this.TurnOn.bind(this);
+    this.selectBank = this.selectBank.bind(this);
+    this.clearDisplay = this.clearDisplay.bind(this);
+    this.adjustVolume = this.adjustVolume.bind(this);
   }
-  displayClipName(name) {
-    if (this.state.power) {
+  displayClipName(name) 
+  {
+    if (this.state.power){
       this.setState({
         display: name
       });
     }
   }
+  TurnOn()
+  {
+    this.setState({
+       power: !this.state.power,
+       display: String.fromCharCode(160)
+    });
+  }
+  selectBank() 
+  {
+    if(this.state.power)
+    {
+      if(this.state.currentPadBank== bankOne)
+      {
+          this.setState({
+            currentPadBank: bankTwo,
+            display: 'Smooth Piano Kit',
+            currentPadBankId: 'Smooth Piano Kit'
+          });
+      }
+      else
+      {
+        this.setState({
+          currentPadBank: bankOne,
+          display: 'Heater Kit',
+          currentPadBankId: 'Heater Kit'
+        });
+      }
+    }
+  }
+  clearDisplay() {
+    this.setState({
+      display: String.fromCharCode(160)
+    });
+  }
+  adjustVolume(e) {
+    if (this.state.power)
+     {
+      this.setState({
+        sliderVal: e.target.value,
+        display: "Volume: " + Math.round(e.target.value * 100)
+      });
+      setTimeout(() => this.clearDisplay(), 1000);
+    }
+  }
 
   render() {
+    const clips = [].slice.call(document.getElementsByClassName('clip'));
+      clips.forEach(sound => {
+        sound.volume = this.state.sliderVal
+      });
     return (
       <body>
         <div id="drum-machine" className="text-center">
@@ -160,7 +213,10 @@ class App extends React.Component {
           </div>
           <div id="DivControlPanel">
             <ControlsPanel
-            power={this.state.power} />
+            turnOnOff = {this.TurnOn} 
+            selectBank = {this.selectBank}
+            volumen = {this.state.sliderVal}
+            adjustVolume = {this.adjustVolume}/>
           </div>
 
         </div>
@@ -222,7 +278,6 @@ class DrumPad extends React.Component {
     return (
       <div id={this.props.clipId}
         onClick={this.playSound}
-        className="drum-pad"
         style={this.state.padStyle} >
         <audio className='clip' id={this.props.keyTrigger} src={this.props.clip}></audio>
         {this.props.keyTrigger}
@@ -288,14 +343,14 @@ class ControlsPanel extends React.Component {
       <div id="controls">
         {/* On/Off FlipSwitch styled by https://proto.io/freebies/onoff/   */}
         <div id="onOffSelector" class="onoffswitch">
-          <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" />
+          <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" onChange={this.props.turnOnOff} id="myonoffswitch" />
           <label class="onoffswitch-label" for="myonoffswitch">
             <span class="onoffswitch-inner"></span>
             <span class="onoffswitch-switch"></span>
           </label>
         </div>
         <div id="bankSelector" class="onoffswitch2">
-          <input type="checkbox" name="onoffswitch2" class="onoffswitch-checkbox2" id="myonoffswitch2" />
+          <input type="checkbox" name="onoffswitch2" class="onoffswitch-checkbox2" onChange={this.props.selectBank} id="myonoffswitch2" />
           <label class="onoffswitch-label2" for="myonoffswitch2">
             <span class="onoffswitch-inner2"></span>
             <span class="onoffswitch-switch2"></span>
@@ -304,7 +359,7 @@ class ControlsPanel extends React.Component {
         <div id="volumen">
           <label id="volumenLabel" for="volumen-range">Volumen</label>
           <br />
-          <input type="range" id="volumen-range"></input>
+          <input type="range" id="volumen-range" min="0" max="1" step="0.01" value={this.props.volumen} onChange={this.props.adjustVolume}></input>
         </div>
       </div>
     )
